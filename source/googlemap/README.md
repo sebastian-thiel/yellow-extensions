@@ -1,6 +1,6 @@
 <p align="right"><a href="README-de.md">Deutsch</a> &nbsp; <a href="README.md">English</a> &nbsp; <a href="README-sv.md">Svenska</a></p>
 
-# Googlemap 0.8.7
+# Googlemap 0.9.0
 
 Embed Google map.
 
@@ -12,7 +12,7 @@ Create a `[googlemap]` shortcut.
 
 The following arguments are available, all but the first argument are optional:
 
-`Address` = text you enter on [Google Maps](https://maps.google.com/), wrap multiple words into quotes  
+`Address` = text you enter on [Google Maps](https://maps.google.com/), wrap multiple words into quotes. Or `mid=...` of shared google map (e.g. one of [your own maps](https://www.google.com/maps/d/))  
 `Zoom` = zoom value, the default zoom is 15  
 `Style` = map style, e.g. `left`, `center`, `right`  
 `Width` = map width, pixel or percent  
@@ -25,6 +25,7 @@ Embedding a map, different addresses:
     [googlemap Stockholm]
     [googlemap "Malmö, Gamla staden"]
     [googlemap "Bredgatan 1, Lund, Sweden"]
+    [googlemap mid=1122CMPdX0IhtF6SyyDVmlrSd7c0]
 
 Embedding a map, different GPS coordinates:
 

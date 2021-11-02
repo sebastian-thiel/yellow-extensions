@@ -1,6 +1,6 @@
 <p align="right"><a href="README-de.md">Deutsch</a> &nbsp; <a href="README.md">English</a> &nbsp; <a href="README-sv.md">Svenska</a></p>
 
-# Googlemap 0.8.7
+# Googlemap 0.9.0
 
 Bädda in Google-karta.
 
@@ -25,6 +25,7 @@ Bädda in en karta, olika adresser:
     [googlemap Stockholm]
     [googlemap "Malmö, Gamla staden"]
     [googlemap "Bredgatan 1, Lund, Sweden"]
+    [googlemap mid=1122CMPdX0IhtF6SyyDVmlrSd7c0]
 
 Bädda in en karta, olika GPS-koordinater:
 

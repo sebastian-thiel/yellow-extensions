@@ -2,7 +2,7 @@
 // Googlemap extension, https://github.com/datenstrom/yellow-extensions/tree/master/source/googlemap
 
 class YellowGooglemap {
-    const VERSION = "0.8.7";
+    const VERSION = "0.9.0";
     public $yellow;         // access to API
     
     // Handle initialisation
@@ -21,7 +21,13 @@ class YellowGooglemap {
             if (empty($style)) $style = $this->yellow->system->get("googlemapStyle");
             $language = $page->get("language");
             $output = "<div class=\"".htmlspecialchars($style)."\">";
-            $output .= "<iframe src=\"https://maps.google.com/maps?q=".rawurlencode($address)."&amp;ie=UTF8&amp;t=m&amp;z=".rawurlencode($zoom)."&amp;hl=$language&amp;iwloc=near&amp;num=1&amp;output=embed\" frameborder=\"0\"";
+            $url = "https://www.google.com/maps";
+            if (preg_match('/mid\=.*/', $address)) {
+            	$url .= "/d/embed?".$address;
+            } else {
+            	$url .= "?q=".rawurlencode($address);
+            }
+            $output .= "<iframe src=\"".$url."&amp;ie=UTF8&amp;t=m&amp;z=".rawurlencode($zoom)."&amp;hl=$language&amp;iwloc=near&amp;num=1&amp;output=embed\" frameborder=\"0\"";
             if ($width && $height) $output .= " width=\"".htmlspecialchars($width)."\" height=\"".htmlspecialchars($height)."\"";
             $output .= "></iframe></div>";
         }
