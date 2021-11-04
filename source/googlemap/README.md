@@ -12,7 +12,7 @@ Create a `[googlemap]` shortcut.
 
 The following arguments are available, all but the first argument are optional:
 
-`Address` = text you enter on [Google Maps](https://maps.google.com/), wrap multiple words into quotes. Or `mid=...` of shared google map (e.g. one of [your own maps](https://www.google.com/maps/d/))  
+`Address` = text you enter on [Google Maps](https://maps.google.com/), wrap multiple words into quotes. Or the value of the `mid` parameter of the embed URL of a shared Google map (e.g. one of [your own maps](https://www.google.com/maps/d/))  
 `Zoom` = zoom value, the default zoom is 15  
 `Style` = map style, e.g. `left`, `center`, `right`  
 `Width` = map width, pixel or percent  
@@ -25,7 +25,7 @@ Embedding a map, different addresses:
     [googlemap Stockholm]
     [googlemap "Malmö, Gamla staden"]
     [googlemap "Bredgatan 1, Lund, Sweden"]
-    [googlemap mid=1122CMPdX0IhtF6SyyDVmlrSd7c0]
+    [googlemap 1122CMPdX0IhtF6SyyDVmlrSd7c0]
 
 Embedding a map, different GPS coordinates:
 

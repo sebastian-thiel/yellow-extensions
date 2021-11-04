@@ -22,8 +22,8 @@ class YellowGooglemap {
             $language = $page->get("language");
             $output = "<div class=\"".htmlspecialchars($style)."\">";
             $url = "https://www.google.com/maps";
-            if (preg_match('/mid\=.*/', $address)) {
-            	$url .= "/d/embed?".$address;
+            if (preg_match('/[a-zA-Z\d]{28}/', $address)) {
+            	$url .= "/d/embed?mid=".$address;
             } else {
             	$url .= "?q=".rawurlencode($address);
             }

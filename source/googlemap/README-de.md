@@ -12,7 +12,7 @@ Erstelle eine `[googlemap]`-Abkürzung.
 
 Die folgenden Argumente sind verfügbar, alle bis auf das erste Argument sind optional:
 
-`Address` = Text den man auf [Google-Maps](https://maps.google.com/) eingibt, mehrere Wörter in Anführungszeichen setzen. Oder `mid=...` einer geteilten Google-Karte (z.B. eine von [deinen eigenen Karten](https://www.google.com/maps/d/))    
+`Address` = Text den man auf [Google-Maps](https://maps.google.com/) eingibt, mehrere Wörter in Anführungszeichen setzen. Oder der Wert des Parameters `mid` der embed-URL einer geteilten Google-Karte (z.B. eine von [deinen eigenen Karten](https://www.google.com/maps/d/))    
 `Zoom` = Zoomwert, der Standardzoom ist 15  
 `Style` = Kartenstil, z.B. `left`, `center`, `right`  
 `Width` = Kartenbreite, Pixel oder Prozent  
@@ -25,7 +25,7 @@ Karte einbinden, unterschiedliche Adressen:
     [googlemap Stockholm]
     [googlemap "Malmö, Gamla staden"]
     [googlemap "Bredgatan 1, Lund, Sweden"]
-    [googlemap mid=1122CMPdX0IhtF6SyyDVmlrSd7c0]
+    [googlemap 1122CMPdX0IhtF6SyyDVmlrSd7c0]
 
 Karte einbinden, unterschiedliche GPS-Koordinaten:
 
