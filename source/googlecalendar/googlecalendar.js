@@ -21,15 +21,37 @@ GoogleCalendar.prototype = {
                 var item = events.items[i];
                 var summary = item.summary;
                 var description = item.description ? item.description : "";
-                var format = item.start.date ? this.options.dateFormatMedium : this.options.dateFormatLong;
-                var date = item.start.date ? item.start.date : item.start.dateTime;
+                
+                var startDate = item.start.date ? item.start.date : item.start.dateTime;
+                var endDate = item.end.date ? item.end.date : item.end.dateTime;
+                
+                var isWholeDay = item.start.date && item.end.date ? true : false;
+                var isSameDay = new Date(endDate).getTime() - new Date(startDate).getTime() <= 1000*60*60*24;
+                
+                var startDateFormat;
+                var endDateFormat;
+                if (isWholeDay && isSameDay) {
+                	startDateFormat = this.options.dateFormatMedium;
+                	endDateFormat  = false;
+                } else if (isWholeDay && !isSameDay) {
+                	startDateFormat = this.options.dateFormatMedium;
+                	endDateFormat  = this.options.dateFormatMedium;
+                } else if (!isWholeDay && isSameDay) {
+                	startDateFormat = this.options.dateFormatLong;
+                	endDateFormat  = this.options.timeFormatShort;
+                } else if (!isWholeDay && !isSameDay) {
+                	startDateFormat = this.options.dateFormatLong;
+                	endDateFormat  = this.options.dateFormatLong;
+                }
+                var isRange = !isWholeDay || !isSameDay;
+                
                 var location = item.location ? item.location : "";
                 var li = document.createElement("li");
                 li.innerHTML =
-                "<span class=\"summary\">"+this.encodeHtml(summary)+"</span>"+
-                (location ? ", <span class=\"location\">"+this.encodeHtml(location)+"</span>" : "")+
-                " <span class=\"description\">"+this.encodeHtml(description)+"</span>"+
-                " <span class=\"date\">"+this.encodeHtml(this.formatDate(format, new Date(date)))+"</span>";
+                " <span class=\"summary\">"+this.encodeHtml(summary)+"</span>"+
+                " <span class=\"date\">"+ (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "")+"</span>"+
+                " <span class=\"location\">"+ (location ? "<a href=\"https://maps.google.com/maps?q="+this.encodeHtml(location)+"\" target=\"blank\">"+this.encodeHtml(location)+"</a></span>" : "")+
+                " <span class=\"description\">"+description+"</span>";
                 ul.appendChild(li);
             }
             this.element.appendChild(ul);
@@ -47,10 +69,32 @@ GoogleCalendar.prototype = {
                 var item = events.items[i];
                 var summary = item.summary;
                 var description = item.description ? item.description : "";
-                var date = item.start.date ? item.start.date : item.start.dateTime;
-                var time = item.start.dateTime ? item.start.dateTime : "";
+                
+                var startDate = item.start.date ? item.start.date : item.start.dateTime;
+                var endDate = item.end.date ? item.end.date : item.end.dateTime;
+                
+                var isWholeDay = item.start.date && item.end.date ? true : false;
+                var isSameDay = new Date(endDate).getTime() - new Date(startDate).getTime() <= 1000*60*60*24;
+                
+                var startDateFormat;
+                var endDateFormat;
+                if (isWholeDay && isSameDay) {
+                	startDateFormat = false;
+                	endDateFormat  = false;
+                } else if (isWholeDay && !isSameDay) {
+                	startDateFormat = false;
+                	endDateFormat  = this.options.dateFormatMedium;
+                } else if (!isWholeDay && isSameDay) {
+                	startDateFormat = this.options.timeFormatShort;
+                	endDateFormat  = this.options.timeFormatShort;
+                } else if (!isWholeDay && !isSameDay) {
+                	startDateFormat = this.options.timeFormatShort;
+                	endDateFormat  = this.options.dateFormatLong;
+                }
+                var isRange = !isWholeDay || !isSameDay;
+                
                 var location = item.location ? item.location : "";
-                var sectionNew = this.formatDate(this.options.dateFormatMedium, new Date(date));
+                var sectionNew = this.formatDate(this.options.dateFormatMedium, new Date(startDate));
                 if (section!=sectionNew) {
                     section = sectionNew;
                     var header = document.createElement("h2");
@@ -63,10 +107,11 @@ GoogleCalendar.prototype = {
                 }
                 var li = document.createElement("li");
                 li.innerHTML =
-                "<span class=\"time\">"+this.encodeHtml(time ? this.formatDate(this.options.timeFormatShort, new Date(time)) : "")+"</span>"+
+                " <span class=\"time\">"+ (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "")+"</span>"+
                 " <span class=\"summary\">"+this.encodeHtml(summary)+"</span>"+
-                (location ? ", <span class=\"location\">"+this.encodeHtml(location)+"</span>" : "");
-                ul.appendChild(li);
+                " <span class=\"location\"><a href=\"https://maps.google.com/maps?q="+this.encodeHtml(location)+"\" target=\"blank\">"+this.encodeHtml(location)+"</a></span>"+
+                " <span class=\"description\">"+description+"</span>";
+                ul.appendChild(li); 
             }
             this.element.appendChild(ul);
         }
@@ -80,7 +125,7 @@ GoogleCalendar.prototype = {
     
     // Request calendar data
     request: function() {
-        var url = "https://www.googleapis.com/calendar/v3/calendars/"+encodeURIComponent(this.options.calendar)+"/events?timeZone="+encodeURIComponent(this.options.timeZone)+"&timeMin="+encodeURIComponent(this.options.timeMin)+"&maxResults="+encodeURIComponent(this.options.entriesMax)+"&singleEvents=true&orderBy=startTime&fields=items(description%2Csummary%2Clocation%2Cstart)&key="+encodeURIComponent(this.options.apiKey);
+        var url = "https://www.googleapis.com/calendar/v3/calendars/"+encodeURIComponent(this.options.calendar)+"/events?timeZone="+encodeURIComponent(this.options.timeZone)+"&timeMin="+encodeURIComponent(this.options.timeMin)+"&maxResults="+encodeURIComponent(this.options.entriesMax)+"&singleEvents=true&orderBy=startTime&fields=items(description%2Csummary%2Clocation%2Cstart%2Cend)&key="+encodeURIComponent(this.options.apiKey);
         switch (this.options.mode) {
             case "events":  this.requestUrl(url, this.onShowEvents, this.onShowError); break;
             case "agenda":  this.requestUrl(url, this.onShowAgenda, this.onShowError); break;
