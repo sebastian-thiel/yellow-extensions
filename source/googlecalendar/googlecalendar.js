@@ -46,10 +46,13 @@ GoogleCalendar.prototype = {
                 var isRange = !isWholeDay || !isSameDay;
                 
                 var location = item.location ? item.location : "";
+                var date = (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "");
+                var id = (this.encodeHtml(summary)+" "+date).replaceAll(" ", "_");
                 var li = document.createElement("li");
+                li.id = id;
                 li.innerHTML =
-                " <span class=\"summary\">"+this.encodeHtml(summary)+"</span>"+
-                " <span class=\"date\">"+ (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "")+"</span>"+
+                " <a class=\"summary\" href=\"#"+id+"\">"+this.encodeHtml(summary)+"</a>"+
+                " <span class=\"date\">"+date+"</span>"+
                 " <span class=\"location\">"+ (location ? "<a href=\"https://maps.google.com/maps?q="+this.encodeHtml(location)+"\" target=\"blank\">"+this.encodeHtml(location)+"</a></span>" : "")+
                 " <span class=\"description\">"+description+"</span>";
                 ul.appendChild(li);
@@ -94,6 +97,7 @@ GoogleCalendar.prototype = {
                 var isRange = !isWholeDay || !isSameDay;
                 
                 var location = item.location ? item.location : "";
+                
                 var sectionNew = this.formatDate(this.options.dateFormatMedium, new Date(startDate));
                 if (section!=sectionNew) {
                     section = sectionNew;
@@ -105,11 +109,14 @@ GoogleCalendar.prototype = {
                     ul = document.createElement("ul");
                     ul.className = this.options.mode;
                 }
+                var date = (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "");
+                var id = (this.encodeHtml(summary)+" "+date).replaceAll(" ", "_");
                 var li = document.createElement("li");
+                li.id = id;
                 li.innerHTML =
-                " <span class=\"time\">"+ (startDateFormat ? this.encodeHtml(this.formatDate(startDateFormat, new Date(startDate))) : "") + (isRange ? " - " : "") + (endDateFormat ? this.encodeHtml(this.formatDate(endDateFormat, new Date(endDate))) : "")+"</span>"+
-                " <span class=\"summary\">"+this.encodeHtml(summary)+"</span>"+
-                " <span class=\"location\"><a href=\"https://maps.google.com/maps?q="+this.encodeHtml(location)+"\" target=\"blank\">"+this.encodeHtml(location)+"</a></span>"+
+                " <span class=\"time\">"+date+"</span>"+
+                " <a class=\"summary\" href=\"#"+id+"\">"+this.encodeHtml(summary)+"</a>"+
+                " <span class=\"location\">"+ (location ? "<a href=\"https://maps.google.com/maps?q="+this.encodeHtml(location)+"\" target=\"blank\">"+this.encodeHtml(location)+"</a></span>" : "")+
                 " <span class=\"description\">"+description+"</span>";
                 ul.appendChild(li); 
             }
