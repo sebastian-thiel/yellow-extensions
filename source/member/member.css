@@ -1,0 +1,70 @@
+/* Member extension */
+
+/* pass */
+.pass {
+	border: 1px solid #ced4da;
+	padding: 1em;
+	margin-bottom: 1em;
+}
+.pass .qrcode {
+	padding: 0;
+	margin: 1em -7px 0 -7px;
+	background: #fff;
+	text-align: inherit;
+	display: block;
+}
+.pass .qrcode figcaption {
+	margin-left: 7px;
+}
+.pass .qrcode figcaption::before {
+	display: none;
+}
+.pass p small {
+	display: block;
+	margin-top: 1rem;
+}
+
+@media print {
+
+    @page {
+        margin: 0;
+    }
+	
+	h1,
+	h2,
+	ol,
+	.notice3,
+	.member .member-form,
+	input,
+	footer {
+		display: none;
+	}
+
+	.pass {
+		border: none;
+		padding: 0;
+	}
+	.pass .img-fluid {
+		display: none;
+	}
+	.pass .qrcode {
+		margin: 0 -4pt; 
+	}
+	.pass.landscape .qrcode {
+		float: right;
+	}
+	.pass .qrcode img {
+		width: 31mm;
+		height: 31mm;
+	}
+	.pass .qrcode figcaption {
+		display: none;
+	}
+	.pass p {
+		font-size: 9pt;
+	}
+	.pass p small {
+		font-size: 6pt;
+		margin-top: 3pt;
+	}
+}
