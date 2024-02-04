@@ -78,7 +78,9 @@ class YellowMember {
                             $output .=      "}";
                             $output .=  "</style>";
                             $urlEncoded = $validatePagePath."?number=".rawurlencode($this->encrypt($number));
+                            $output .= "<a href=\"".$urlEncoded."\">";
                             $output .= $this->yellow->extension->get("qrcode")->onParseContentShortcut($page, "qrcode", $urlEncoded, $type);
+                            $output .= "</a>";
                             $output .= $this->formatMember($result);
                             $output .= "</div>";
                             $output .= "<input type=\"submit\" value=\"Drucken\" class=\"btn print\" />";

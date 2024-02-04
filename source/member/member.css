@@ -6,6 +6,9 @@
 	padding: 1em;
 	margin-bottom: 1em;
 }
+.pass a[href^="http"]::after {
+  content: none !important;
+}
 .pass .qrcode {
 	padding: 0;
 	margin: 1em -7px 0 -7px;
@@ -14,7 +17,7 @@
 	display: block;
 }
 .pass .qrcode figcaption {
-	margin-left: 7px;
+	display: none;
 }
 .pass .qrcode figcaption::before {
 	display: none;
